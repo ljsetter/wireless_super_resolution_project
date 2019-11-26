@@ -1,8 +1,8 @@
 function [x] = anmdoa(y, d, lambda)
+M = length(y);
 % solve dual problem with cvx
-cvx_solver sdpt3
 cvx_begin sdp
-    variable S(M + 1, M + 1)hermitian
+    variable S(M + 1, M + 1) hermitian
     S = 0;
     S(M+1, M+1) == 1;
     trace(S) == 2;
