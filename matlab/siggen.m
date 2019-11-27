@@ -10,7 +10,6 @@ function [snapshots] = siggen(N, M , theta, rho, snr)
 % the data carried by a PSKM signal
 signals = exp(1j*2*pi*rand(length(theta),N)-pi);
 signals = chol(rho)*signals;
-corr(signals')
 
 % steering vectors
 V = exp(-1j*pi*(0:M-1)'*cos(theta)');
