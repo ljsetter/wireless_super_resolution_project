@@ -57,3 +57,6 @@ thetas(S3)
 
 % idxs = 2*pi*(0:M*F-1)/(M*F);
 % acos(idxs(S1))
+
+
+    

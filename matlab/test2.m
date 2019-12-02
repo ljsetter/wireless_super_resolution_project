@@ -28,8 +28,7 @@ corr(M)
 N = 1000; % number of samples
 M = 4; % number of array elements (lamda/2 spacing)
 theta = deg2rad([0 30 150]'); % direction of arrival of signals
-rho = 0; % correlation
+rho = 1; % correlation
 snr = inf; % snr
 k = length(theta);
 Y = siggen(N, M, theta, rho, snr);
-corr(Y.')
