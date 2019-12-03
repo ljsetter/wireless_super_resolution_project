@@ -9,5 +9,6 @@ V = V(:,idx(1:k));
 
 % take linear combination of the most significant eigenvectors weighted
 % by eigenvalues
-e = V*(lambda/sum(lambda));
+%e = V*(lambda/sum(lambda));
+e = sum(V,2);
 end

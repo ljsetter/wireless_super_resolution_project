@@ -26,6 +26,9 @@ for xmax = 1:20
     success3 = 0;
     success4 = 0;
     for j = 1:trials
+        angle1 = 180*rand(1);
+        angle2 = 180*rand(1);
+        theta = deg2rad([angle1 angle2]'); % direction of arrival of signals
         Y = siggen(N, M, theta, rho, snr, Mag);
 
         e = mmv2smv(Y,k);    
@@ -43,7 +46,7 @@ for xmax = 1:20
  
         
         S1 = omp(e,A,k);      
-        eta = 0.2;      
+        eta = 0.15;      
         S2 = bomp(e,A,k,eta);               
         S3 = bloomp(e,A,k,eta);
         [~,idx,thetaGrid] = musicdoa(covmat, length(theta), gridElements);

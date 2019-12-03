@@ -2,7 +2,7 @@ clear all
 close all
 
 N = 100; % number of samples
-M = 32; % number of array elements (lamda/2 spacing)
+M = 8; % number of array elements (lamda/2 spacing)
 angle1 = 23;
 angle2 = 74;
 theta = deg2rad([angle1 angle2]'); % direction of arrival of signals
@@ -26,6 +26,9 @@ for snr = 10:50
     success3 = 0;
     success4 = 0;
     for j = 1:trials
+        angle1 = 180*rand(1);
+        angle2 = 180*rand(1);
+        theta = deg2rad([angle1 angle2]'); % direction of arrival of signals
         Y = siggen(N, M, theta, rho, snr, Mag);
 
         e = mmv2smv(Y,k);    
@@ -41,11 +44,10 @@ for snr = 10:50
             thetas(i+1) = acosd(phi/pi);
             A(:,i+1) = exp(1j*phi*(0:M-1));
         end
-      
-      
+       
         
         S1 = omp(e,A,k);      
-        eta = 0.1;      
+        eta = 0.15;      
         S2 = bomp(e,A,k,eta);               
         S3 = bloomp(e,A,k,eta);
         [~,idx,thetaGrid] = musicdoa(covmat, length(theta), gridElements);
@@ -77,7 +79,7 @@ hold on;
 plot(10:50,prob4);
 
 legend('OMP', 'BOMP', 'BLOOMP', 'MUSIC');
-title('Success probability vs. SNR for 32 elements');
+title('Success probability vs. SNR for 8 elements');
 xlabel('SNR (dB)');
 ylabel('Success rate in 100 trials');
 hold off;

@@ -2,7 +2,7 @@ clear all
 close all
 
 N = 100; % number of samples
-M = 32; % number of array elements (lamda/2 spacing)
+M = 8; % number of array elements (lamda/2 spacing)
 angle1 = 23;
 angle2 = 74;
 theta = deg2rad([angle1 angle2]'); % direction of arrival of signals
@@ -10,7 +10,7 @@ xmin = 1;
 xmax = 1;
 Mag = [xmin xmax];
 rho = 0; % correlation
-snr = inf; % snr
+snr = 30; % snr
 k = length(theta);
 success1 = 0;
 success2 = 0;
@@ -26,11 +26,13 @@ for N = 10:100
     success3 = 0;
     success4 = 0;
     for j = 1:trials
+        angle1 = 180*rand(1);
+        angle2 = 180*rand(1);
+        theta = deg2rad([angle1 angle2]'); % direction of arrival of signals
         Y = siggen(N, M, theta, rho, snr, Mag);
 
         e = mmv2smv(Y,k);    
-        covmat = cov(Y');
-        
+        covmat = cov(Y');        
         
         % create overcomplete dictionary of sinusoids
         F = 20; % refinement factor
@@ -45,7 +47,7 @@ for N = 10:100
       
         
         S1 = omp(e,A,k);      
-        eta = 0.1;      
+        eta = 0.15;      
         S2 = bomp(e,A,k,eta);               
         S3 = bloomp(e,A,k,eta);
         [~,idx,thetaGrid] = musicdoa(covmat, length(theta), gridElements);
@@ -77,7 +79,7 @@ hold on;
 plot(10:100,prob4);
 
 legend('OMP', 'BOMP', 'BLOOMP', 'MUSIC');
-title('Success probability vs. Number of Measurements with no noise, 32 elements');
+title('Success probability vs. Number of Measurements with SNR = 30dB, 8 elements');
 xlabel('Number of Measurements');
 ylabel('Success rate in 100 trials');
 hold off;
